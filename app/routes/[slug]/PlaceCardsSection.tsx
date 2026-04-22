@@ -52,12 +52,12 @@ function PlaceCardItem({ card, onClick }: { card: PlaceCard; onClick: () => void
       }}
     >
       {card.image ? (
-        /* photo — no overlays, no text, full image */
+        /* photo — fills card completely, anchored to bottom to preserve captions */
         <Image
           src={card.image}
           alt={card.title}
           fill
-          style={{ objectFit: "contain", objectPosition: "center" }}
+          style={{ objectFit: "cover", objectPosition: "center bottom" }}
         />
       ) : (
         /* fallback when no photo: dark gradient + title */

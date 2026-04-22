@@ -48,7 +48,7 @@ const routeData: Record<string, RouteData> = {
       { time: "17:30", title: "Возвращение в Петербург", subtitle: "К ужину дома" },
     ],
     nearby: [
-      { title: "Смотровая точка на Волхов", meta: "2 км", image: "/images/routes/staraya-ladoga/volkhov-view/cover.jpg" },
+      { title: "Смотровая точка на Волхов", meta: "2 км", image: "/images/routes/staraya-ladoga/volkhov-view/cover.jpg?v=2" },
       { title: "Кафе с домашней кухней", meta: "5 мин", image: "/images/routes/staraya-ladoga/home-cafe/cover.jpg" },
     ],
     enroute: [
