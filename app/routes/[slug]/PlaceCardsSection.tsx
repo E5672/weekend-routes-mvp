@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 
 type PlaceCard = { title: string; meta: string; image?: string };
 
 const gold = "#D4AF70";
+
 
 const glassCard: React.CSSProperties = {
   background: "rgba(15,13,9,0.74)",
@@ -43,7 +43,13 @@ function PlaceCardItem({ card, onClick }: { card: PlaceCard; onClick: () => void
         minHeight: "110px",
         border: "1px solid rgba(212,175,112,0.26)",
         cursor: card.image ? "pointer" : "default",
-        background: "#0a0804",
+        /* CSS background-image — bypasses Next.js optimizer entirely,
+           files served directly from /public as static assets */
+        backgroundColor: "#0a0804",
+        backgroundImage: card.image ? `url(${card.image})` : "none",
+        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         boxShadow: [
           "0 0 0 1px rgba(212,175,112,0.08) inset",
           "0 4px 22px rgba(180,138,48,0.10)",
@@ -51,17 +57,8 @@ function PlaceCardItem({ card, onClick }: { card: PlaceCard; onClick: () => void
         ].join(", "),
       }}
     >
-      {card.image ? (
-        /* photo — served unoptimized to handle PNG files with .jpg extension */
-        <Image
-          src={card.image}
-          alt={card.title}
-          fill
-          unoptimized
-          style={{ objectFit: "contain", objectPosition: "center" }}
-        />
-      ) : (
-        /* fallback when no photo: dark gradient + title */
+      {/* fallback when no photo: dark gradient + title text */}
+      {!card.image && (
         <>
           <div style={{
             position: "absolute", inset: 0,
@@ -199,20 +196,26 @@ export default function PlaceCardsSection({
             ×
           </button>
 
-          {/* image — click inside doesn't close */}
+          {/* image — click inside doesn't close, plain img for reliability */}
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              position: "relative",
-              width: "min(900px, 88vw)",
-              height: "min(675px, 86vh)",
+              maxWidth: "88vw",
+              maxHeight: "86vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <Image
+            <img
               src={lightboxSrc}
               alt="фото"
-              fill
-              style={{ objectFit: "contain" }}
+              style={{
+                maxWidth: "88vw",
+                maxHeight: "86vh",
+                objectFit: "contain",
+                borderRadius: "8px",
+              }}
             />
           </div>
         </div>
