@@ -540,7 +540,7 @@ export default async function RouteDetailPage({
           }}>
             <div style={{
               display: "grid",
-              gridTemplateColumns: "0.75fr 1.6fr 1.0fr",
+              gridTemplateColumns: "0.62fr 2.05fr 0.82fr",
               gap: "14px",
             }}>
 
