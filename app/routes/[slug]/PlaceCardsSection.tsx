@@ -52,7 +52,7 @@ function PlaceCardItem({ card, onClick }: { card: PlaceCard; onClick: () => void
       }}
     >
       {card.image ? (
-        /* photo — no overlay, full brightness */
+        /* photo — full brightness, no overlay */
         <Image
           src={card.image}
           alt={card.title}
@@ -195,9 +195,9 @@ export default function PlaceCardsSection({
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gridTemplateRows: "1fr",
-            gap: "11px",
+            gap: "14px",
             flex: 1,
-            minHeight: "122px",
+            minHeight: "154px",
           }}>
             {nearby.map((card) => (
               <PlaceCardItem key={card.title} card={card} onClick={() => open(card)} />
@@ -220,9 +220,9 @@ export default function PlaceCardsSection({
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gridTemplateRows: "1fr",
-            gap: "11px",
+            gap: "14px",
             flex: 1,
-            minHeight: "122px",
+            minHeight: "154px",
           }}>
             {enroute.map((card) => (
               <PlaceCardItem key={card.title} card={card} onClick={() => open(card)} />

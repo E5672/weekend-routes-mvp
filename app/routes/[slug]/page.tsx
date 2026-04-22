@@ -333,7 +333,7 @@ export default async function RouteDetailPage({
               </div>
               <div className="hidden md:flex items-center" style={{ gap: "44px" }}>
                 {["Маршруты", "Подбор", "Избранное ♡", "О проекте"].map((link) => (
-                  <span key={link} style={{ color: "rgba(255,255,255,0.86)", fontSize: "15px", fontWeight: 500, cursor: "default" }}>{link}</span>
+                  <span key={link} style={{ color: "rgba(255,255,255,0.86)", fontSize: "15px", fontWeight: 500, cursor: "default", textShadow: "0 1px 6px rgba(0,0,0,0.7), 0 0 2px rgba(0,0,0,0.9)" }}>{link}</span>
                 ))}
               </div>
               <button style={{
@@ -363,7 +363,7 @@ export default async function RouteDetailPage({
               position: "relative",
               zIndex: 10,
               paddingLeft: "56px",
-              paddingBottom: "108px",
+              paddingBottom: "97px",
               flexShrink: 0,
             }}>
               <div style={{ maxWidth: "540px" }}>
@@ -441,8 +441,8 @@ export default async function RouteDetailPage({
                   <button
                     className="transition-all active:scale-[0.97] hover:brightness-105"
                     style={{
-                      width: "240px",
-                      height: "62px",
+                      width: "214px",
+                      height: "56px",
                       borderRadius: "999px",
                       background: "linear-gradient(160deg, #E4C768 0%, #D4A438 24%, #C69030 52%, #D0A030 78%, #C49030 100%)",
                       color: "#14100A",
@@ -464,8 +464,8 @@ export default async function RouteDetailPage({
                   <button
                     className="transition-all active:scale-[0.97]"
                     style={{
-                      width: "200px",
-                      height: "62px",
+                      width: "176px",
+                      height: "56px",
                       borderRadius: "999px",
                       border: "1px solid rgba(212,175,112,0.52)",
                       background: "rgba(14,14,14,0.18)",
@@ -588,7 +588,7 @@ export default async function RouteDetailPage({
                           <p style={{ color: "rgba(212,175,112,0.62)", fontSize: "9.5px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.16em", margin: "0 0 3px" }}>
                             {fact.label}
                           </p>
-                          <p style={{ color: "rgba(255,255,255,0.86)", fontSize: "12.5px", fontWeight: 400, lineHeight: 1.3, margin: 0 }}>
+                          <p style={{ color: "rgba(255,255,255,0.90)", fontSize: "14px", fontWeight: 400, lineHeight: 1.3, margin: 0 }}>
                             {fact.value}
                           </p>
                         </div>
@@ -616,7 +616,7 @@ export default async function RouteDetailPage({
                             }}>
                               {badgeIcons[i] ?? <span style={{ color: gold }}>✦</span>}
                             </div>
-                            <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "11.5px", lineHeight: 1.35, margin: 0 }}>
+                            <p style={{ color: "rgba(255,255,255,0.90)", fontSize: "14px", lineHeight: 1.35, margin: 0 }}>
                               {badge}
                             </p>
                           </div>
@@ -646,7 +646,7 @@ export default async function RouteDetailPage({
                             }}>
                               {tipIcons[i] ?? <span style={{ color: gold, fontSize: "11px" }}>✦</span>}
                             </div>
-                            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "11px", lineHeight: 1.3, margin: 0 }}>
+                            <p style={{ color: "rgba(255,255,255,0.90)", fontSize: "14px", lineHeight: 1.3, margin: 0 }}>
                               {tip}
                             </p>
                           </div>
