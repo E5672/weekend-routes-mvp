@@ -622,75 +622,99 @@ export default async function RouteDetailPage({
                 </div>
               </div>
 
-              {/* ── RIGHT: О поездке + Советы ── */}
-              <div style={{ ...glassCard, padding: "18px 18px 16px" }}>
-                <CardLabel>О поездке</CardLabel>
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "16px" }}>
-                  {(route.facts ?? []).map((fact, i, arr) => (
-                    <div
-                      key={fact.label}
-                      style={{
-                        paddingBottom: i < arr.length - 1 ? "10px" : 0,
-                        borderBottom: i < arr.length - 1 ? "1px solid rgba(212,175,112,0.08)" : "none",
-                      }}
-                    >
-                      <p style={{ color: "rgba(212,175,112,0.62)", fontSize: "10px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.16em", margin: "0 0 3px" }}>
-                        {fact.label}
-                      </p>
-                      <p style={{ color: "rgba(255,255,255,0.86)", fontSize: "13.5px", fontWeight: 400, lineHeight: 1.3, margin: 0 }}>
-                        {fact.value}
-                      </p>
+              {/* ── RIGHT: big block — top row 2 cards + bottom row full-width ── */}
+              <div style={{ ...glassCard, padding: "14px" }}>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "10px",
+                }}>
+
+                  {/* top-left: О поездке */}
+                  <div style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(212,175,112,0.10)",
+                    borderRadius: "18px",
+                    padding: "14px 13px 12px",
+                  }}>
+                    <CardLabel>О поездке</CardLabel>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      {(route.facts ?? []).map((fact, i, arr) => (
+                        <div key={fact.label} style={{
+                          paddingBottom: i < arr.length - 1 ? "8px" : 0,
+                          borderBottom: i < arr.length - 1 ? "1px solid rgba(212,175,112,0.08)" : "none",
+                        }}>
+                          <p style={{ color: "rgba(212,175,112,0.62)", fontSize: "9.5px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.16em", margin: "0 0 3px" }}>
+                            {fact.label}
+                          </p>
+                          <p style={{ color: "rgba(255,255,255,0.86)", fontSize: "12.5px", fontWeight: 400, lineHeight: 1.3, margin: 0 }}>
+                            {fact.value}
+                          </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+
+                  {/* top-right: Преимущества */}
+                  {route.badges && (
+                    <div style={{
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(212,175,112,0.10)",
+                      borderRadius: "18px",
+                      padding: "14px 13px 12px",
+                    }}>
+                      <CardLabel>Преимущества</CardLabel>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
+                        {route.badges.map((badge, i) => (
+                          <div key={badge} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                            <div style={{
+                              width: "28px", height: "28px", borderRadius: "8px", flexShrink: 0,
+                              background: "rgba(212,175,112,0.09)",
+                              border: "1px solid rgba(212,175,112,0.20)",
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                            }}>
+                              {badgeIcons[i] ?? <span style={{ color: gold }}>✦</span>}
+                            </div>
+                            <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "11.5px", lineHeight: 1.35, margin: 0 }}>
+                              {badge}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* bottom: Советы — full width */}
+                  {tips.length > 0 && (
+                    <div style={{
+                      gridColumn: "1 / -1",
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(212,175,112,0.10)",
+                      borderRadius: "18px",
+                      padding: "14px 13px 12px",
+                    }}>
+                      <CardLabel>Советы</CardLabel>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                        {tips.slice(0, 4).map((tip, i) => (
+                          <div key={tip} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                            <div style={{
+                              width: "28px", height: "28px", borderRadius: "8px", flexShrink: 0,
+                              background: "rgba(212,175,112,0.09)",
+                              border: "1px solid rgba(212,175,112,0.18)",
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                            }}>
+                              {tipIcons[i] ?? <span style={{ color: gold, fontSize: "11px" }}>✦</span>}
+                            </div>
+                            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "11px", lineHeight: 1.3, margin: 0 }}>
+                              {tip}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                 </div>
-
-                {/* преимущества */}
-                {route.badges && (
-                  <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px", marginBottom: "14px" }}>
-                    <CardLabel>Преимущества</CardLabel>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                      {route.badges.map((badge, i) => (
-                        <div key={badge} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                          <div style={{
-                            width: "32px", height: "32px", borderRadius: "9px", flexShrink: 0,
-                            background: "rgba(212,175,112,0.09)",
-                            border: "1px solid rgba(212,175,112,0.20)",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                          }}>
-                            {badgeIcons[i] ?? <span style={{ color: gold }}>✦</span>}
-                          </div>
-                          <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "12px", lineHeight: 1.35, margin: 0 }}>
-                            {badge}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* советы */}
-                {tips.length > 0 && (
-                  <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px" }}>
-                    <CardLabel>Советы</CardLabel>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                      {tips.slice(0, 4).map((tip, i) => (
-                        <div key={tip} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                          <div style={{
-                            width: "28px", height: "28px", borderRadius: "8px", flexShrink: 0,
-                            background: "rgba(212,175,112,0.09)",
-                            border: "1px solid rgba(212,175,112,0.18)",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                          }}>
-                            {tipIcons[i] ?? <span style={{ color: gold, fontSize: "11px" }}>✦</span>}
-                          </div>
-                          <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "11px", lineHeight: 1.3, margin: 0 }}>
-                            {tip}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
 
             </div>
