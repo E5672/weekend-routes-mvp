@@ -240,7 +240,7 @@ function PlaceCardItem({ card }: { card: PlaceCard }) {
       position: "relative",
       overflow: "hidden",
       borderRadius: "14px",
-      height: "88px",
+      height: "112px",
       border: "1px solid rgba(212,175,112,0.26)",
       boxShadow: [
         "0 0 0 1px rgba(212,175,112,0.08) inset",
