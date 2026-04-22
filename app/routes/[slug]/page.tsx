@@ -4,7 +4,7 @@ import Image from "next/image";
 
 type ScenarioStep = { time: string; title: string; subtitle: string };
 type Metric = { value: string; label: string };
-type PlaceCard = { title: string; meta: string };
+type PlaceCard = { title: string; meta: string; image?: string };
 type Section = { label: string; items: string[]; ordered?: boolean };
 type RouteFact = { label: string; value: string };
 
@@ -47,12 +47,12 @@ const routeData: Record<string, RouteData> = {
       { time: "17:30", title: "Возвращение в Петербург", subtitle: "К ужину дома" },
     ],
     nearby: [
-      { title: "Смотровая точка на Волхов", meta: "2 км" },
-      { title: "Кафе с домашней кухней", meta: "5 мин" },
+      { title: "Смотровая точка на Волхов", meta: "2 км", image: "/images/routes/staraya-ladoga/volkhov-view/cover.jpg" },
+      { title: "Кафе с домашней кухней", meta: "5 мин", image: "/images/routes/staraya-ladoga/home-cafe/cover.jpg" },
     ],
     enroute: [
-      { title: "Курган Вещего Олега", meta: "3 км" },
-      { title: "Старая Ладожская пещера", meta: "8 км" },
+      { title: "Курган Вещего Олега", meta: "3 км", image: "/images/routes/staraya-ladoga/oleg-mound/cover.jpg" },
+      { title: "Старая Ладожская пещера", meta: "8 км", image: "/images/routes/staraya-ladoga/ladoga-cave/cover.jpg" },
     ],
     facts: [
       { label: "Когда ехать", value: "Май — Октябрь" },
@@ -249,10 +249,22 @@ function PlaceCardItem({ card }: { card: PlaceCard }) {
         "0 0 36px rgba(180,138,48,0.06)",
       ].join(", "),
     }}>
-      {/* warm dark base */}
+      {/* photo */}
+      {card.image && (
+        <Image
+          src={card.image}
+          alt={card.title}
+          fill
+          className="object-cover"
+          style={{ objectPosition: "center" }}
+        />
+      )}
+      {/* dark overlay — heavier when no photo, lighter when photo present */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(135deg, rgba(58,46,18,0.68) 0%, rgba(10,8,4,0.94) 65%, rgba(8,6,2,0.97) 100%)",
+        background: card.image
+          ? "linear-gradient(180deg, rgba(8,6,2,0.30) 0%, rgba(8,6,2,0.68) 60%, rgba(8,6,2,0.88) 100%)"
+          : "linear-gradient(135deg, rgba(58,46,18,0.68) 0%, rgba(10,8,4,0.94) 65%, rgba(8,6,2,0.97) 100%)",
       }} />
       {/* bottom gold glow */}
       <div style={{
