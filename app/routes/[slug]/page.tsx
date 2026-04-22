@@ -240,7 +240,7 @@ function PlaceCardItem({ card }: { card: PlaceCard }) {
       position: "relative",
       overflow: "hidden",
       borderRadius: "14px",
-      height: "68px",
+      height: "88px",
       border: "1px solid rgba(212,175,112,0.26)",
       boxShadow: [
         "0 0 0 1px rgba(212,175,112,0.08) inset",
@@ -527,50 +527,6 @@ export default async function RouteDetailPage({
               </div>
             </div>
 
-            {/* ── BADGE PANEL — lower-right, connected to bottom cards ── */}
-            {route.badges && (
-              <div
-                className="hidden lg:block"
-                style={{ position: "absolute", right: "48px", bottom: "148px", zIndex: 10 }}
-              >
-                <div style={{
-                  width: "340px",
-                  padding: "20px 22px",
-                  borderRadius: "22px",
-                  background: "rgba(50,46,34,0.28)",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                  backdropFilter: "blur(24px) saturate(1.15)",
-                  WebkitBackdropFilter: "blur(24px) saturate(1.15)",
-                  boxShadow: "0 16px 52px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.09)",
-                }}>
-                  {route.badges.map((badge, i) => (
-                    <div
-                      key={badge}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "14px",
-                        paddingBottom: i < route.badges!.length - 1 ? "14px" : 0,
-                        marginBottom: i < route.badges!.length - 1 ? "14px" : 0,
-                        borderBottom: i < route.badges!.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                      }}
-                    >
-                      <div style={{
-                        width: "40px", height: "40px", borderRadius: "11px", flexShrink: 0,
-                        background: "rgba(212,175,112,0.10)",
-                        border: "1px solid rgba(212,175,112,0.24)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                      }}>
-                        {badgeIcons[i] ?? <span style={{ color: gold, fontSize: "16px" }}>✦</span>}
-                      </div>
-                      <p style={{ color: "rgba(255,255,255,0.76)", fontSize: "14px", lineHeight: 1.4, margin: 0 }}>
-                        {badge}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
 
           </div>
           {/* ── end hero image zone ── */}
@@ -687,6 +643,30 @@ export default async function RouteDetailPage({
                     </div>
                   ))}
                 </div>
+
+                {/* преимущества */}
+                {route.badges && (
+                  <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px", marginBottom: "14px" }}>
+                    <CardLabel>Преимущества</CardLabel>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      {route.badges.map((badge, i) => (
+                        <div key={badge} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <div style={{
+                            width: "32px", height: "32px", borderRadius: "9px", flexShrink: 0,
+                            background: "rgba(212,175,112,0.09)",
+                            border: "1px solid rgba(212,175,112,0.20)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                          }}>
+                            {badgeIcons[i] ?? <span style={{ color: gold }}>✦</span>}
+                          </div>
+                          <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "12px", lineHeight: 1.35, margin: 0 }}>
+                            {badge}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* советы */}
                 {tips.length > 0 && (
