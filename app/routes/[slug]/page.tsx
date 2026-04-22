@@ -240,7 +240,7 @@ function PlaceCardItem({ card }: { card: PlaceCard }) {
       position: "relative",
       overflow: "hidden",
       borderRadius: "14px",
-      height: "112px",
+      height: "100%",
       border: "1px solid rgba(212,175,112,0.26)",
       boxShadow: [
         "0 0 0 1px rgba(212,175,112,0.08) inset",
@@ -603,18 +603,18 @@ export default async function RouteDetailPage({
               </div>
 
               {/* ── MIDDLE: Рядом есть + По дороге (wide, left-shifted) ── */}
-              <div style={{ ...glassCard, padding: "18px 20px 16px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                <div>
+              <div style={{ ...glassCard, padding: "18px 20px 16px", display: "flex", flexDirection: "column" }}>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
                   <CardLabel>Рядом есть</CardLabel>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "9px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr", gap: "9px", flex: 1, minHeight: 0 }}>
                     {(route.nearby ?? []).map((card) => (
                       <PlaceCardItem key={card.title} card={card} />
                     ))}
                   </div>
                 </div>
-                <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px" }}>
+                <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px", marginTop: "14px", flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
                   <CardLabel>По дороге можно заехать</CardLabel>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "9px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr", gap: "9px", flex: 1, minHeight: 0 }}>
                     {(route.enroute ?? []).map((card) => (
                       <PlaceCardItem key={card.title} card={card} />
                     ))}
