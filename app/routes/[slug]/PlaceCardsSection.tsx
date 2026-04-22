@@ -1,224 +1,166 @@
 "use client";
 
-import React, { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
 
-type PlaceCard = { title: string; meta: string; image?: string };
+export type PlaceCard = { title: string; meta: string; image?: string };
 
-const gold = "#D4AF70";
-
-const glassCard: React.CSSProperties = {
-  background: "rgba(15,13,9,0.74)",
-  backdropFilter: "blur(28px)",
-  WebkitBackdropFilter: "blur(28px)",
-  border: "1px solid rgba(212,175,112,0.14)",
-  borderRadius: "26px",
-  boxShadow: "0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(212,175,112,0.08)",
-};
-
-function CardLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p style={{
-      color: "rgba(212,175,112,0.52)",
-      fontSize: "10px",
-      fontWeight: 700,
-      textTransform: "uppercase",
-      letterSpacing: "0.2em",
-      marginBottom: "14px",
-    }}>
-      {children}
-    </p>
-  );
-}
-
-function PlaceCardItem({ card, onClick }: { card: PlaceCard; onClick: () => void }) {
+function PlaceCardItem({
+  card,
+  onOpen,
+}: {
+  card: PlaceCard;
+  onOpen: (src: string) => void;
+}) {
   return (
     <div
-      onClick={card.image ? onClick : undefined}
+      onClick={() => card.image && onOpen(card.image)}
       style={{
         position: "relative",
         overflow: "hidden",
         borderRadius: "14px",
         height: "100%",
-        minHeight: "110px",
+        background: "#080604",
         border: "1px solid rgba(212,175,112,0.26)",
         cursor: card.image ? "pointer" : "default",
-        background: "#0a0804",
         boxShadow: [
           "0 0 0 1px rgba(212,175,112,0.08) inset",
+          "inset 0 0 18px rgba(180,138,48,0.06)",
           "0 4px 22px rgba(180,138,48,0.10)",
           "0 0 36px rgba(180,138,48,0.06)",
         ].join(", "),
       }}
     >
       {card.image ? (
-        /* next/image with fill — unoptimized is set globally in next.config.ts
-           to handle PNG files that have .jpg extension */
         <Image
           src={card.image}
           alt={card.title}
           fill
-          className="object-cover"
+          style={{ objectFit: "contain", objectPosition: "center" }}
         />
       ) : (
-        /* fallback when no photo: dark gradient + title */
-        <>
-          <div style={{
-            position: "absolute", inset: 0,
-            background: "linear-gradient(135deg, rgba(58,46,18,0.68) 0%, rgba(10,8,4,0.94) 65%, rgba(8,6,2,0.97) 100%)",
-          }} />
-          <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "55%",
-            background: "linear-gradient(to top, rgba(180,138,48,0.14) 0%, transparent 100%)",
-          }} />
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "1px",
-            background: "linear-gradient(to right, transparent, rgba(212,175,112,0.22), transparent)",
-          }} />
-          <div style={{
-            position: "absolute", inset: 0,
-            display: "flex", flexDirection: "column", justifyContent: "flex-end",
-            padding: "8px 11px",
-          }}>
-            <p style={{ color: "rgba(255,255,255,0.92)", fontSize: "12.5px", fontWeight: 500, lineHeight: 1.3, margin: 0 }}>
-              {card.title}
-            </p>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3px" }}>
-              <span style={{ color: "rgba(212,175,112,0.55)", fontSize: "10.5px" }}>{card.meta}</span>
-              <span style={{ color: "rgba(212,175,112,0.45)", fontSize: "12px" }}>→</span>
-            </div>
-          </div>
-        </>
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(135deg, rgba(58,46,18,0.68) 0%, rgba(10,8,4,0.94) 65%, rgba(8,6,2,0.97) 100%)",
+        }} />
       )}
     </div>
   );
 }
 
-export default function PlaceCardsSection({
+const labelStyle: React.CSSProperties = {
+  color: "rgba(212,175,112,0.52)",
+  fontSize: "10px",
+  fontWeight: 700,
+  textTransform: "uppercase",
+  letterSpacing: "0.2em",
+  marginBottom: "14px",
+};
+
+export function PlaceCardsSection({
   nearby,
   enroute,
 }: {
   nearby: PlaceCard[];
   enroute: PlaceCard[];
 }) {
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<string | null>(null);
 
   return (
     <>
-      {/* ── MIDDLE card ── */}
-      <div style={{ ...glassCard, padding: "18px 20px 16px", display: "flex", flexDirection: "column" }}>
-
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-          <CardLabel>Рядом есть</CardLabel>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "1fr",
-            gap: "11px",
-            flex: 1,
-            minHeight: 0,
-          }}>
-            {nearby.map((card) => (
-              <PlaceCardItem
-                key={card.title}
-                card={card}
-                onClick={() => card.image && setLightboxSrc(card.image)}
-              />
-            ))}
-          </div>
-        </div>
-
+      {/* section 1 */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
+        <p style={labelStyle}>Рядом есть</p>
         <div style={{
-          borderTop: "1px solid rgba(212,175,112,0.09)",
-          paddingTop: "14px",
-          marginTop: "14px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gridTemplateRows: "1fr",
+          gap: "11px",
           flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          minHeight: 0,
+          minHeight: "124px",
         }}>
-          <CardLabel>По дороге можно заехать</CardLabel>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "1fr",
-            gap: "11px",
-            flex: 1,
-            minHeight: 0,
-          }}>
-            {enroute.map((card) => (
-              <PlaceCardItem
-                key={card.title}
-                card={card}
-                onClick={() => card.image && setLightboxSrc(card.image)}
-              />
-            ))}
-          </div>
+          {nearby.map((card) => (
+            <PlaceCardItem key={card.title} card={card} onOpen={setLightbox} />
+          ))}
         </div>
-
       </div>
 
-      {/* ── LIGHTBOX ── */}
-      {lightboxSrc && (
+      {/* section 2 */}
+      <div style={{
+        borderTop: "1px solid rgba(212,175,112,0.09)",
+        paddingTop: "14px",
+        marginTop: "16px",
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        minHeight: 0,
+      }}>
+        <p style={labelStyle}>По дороге можно заехать</p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gridTemplateRows: "1fr",
+          gap: "11px",
+          flex: 1,
+          minHeight: "124px",
+        }}>
+          {enroute.map((card) => (
+            <PlaceCardItem key={card.title} card={card} onOpen={setLightbox} />
+          ))}
+        </div>
+      </div>
+
+      {/* lightbox */}
+      {lightbox && (
         <div
-          onClick={() => setLightboxSrc(null)}
+          onClick={() => setLightbox(null)}
           style={{
             position: "fixed",
             inset: 0,
-            zIndex: 9999,
+            zIndex: 1000,
             background: "rgba(0,0,0,0.90)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
           }}
         >
-          {/* close button */}
           <button
-            onClick={() => setLightboxSrc(null)}
+            onClick={() => setLightbox(null)}
             style={{
               position: "absolute",
               top: "24px",
               right: "28px",
-              width: "44px",
-              height: "44px",
-              borderRadius: "50%",
+              background: "rgba(255,255,255,0.09)",
               border: "1px solid rgba(255,255,255,0.18)",
-              background: "rgba(255,255,255,0.08)",
-              color: "rgba(255,255,255,0.82)",
+              color: "rgba(255,255,255,0.88)",
               fontSize: "24px",
-              lineHeight: 1,
+              width: "46px",
+              height: "46px",
+              borderRadius: "50%",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              flexShrink: 0,
+              lineHeight: 1,
             }}
           >
             ×
           </button>
-
-          {/* image — click inside doesn't close */}
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              maxWidth: "88vw",
-              maxHeight: "86vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              position: "relative",
+              width: "min(90vw, 1200px)",
+              height: "min(85vh, 800px)",
             }}
           >
-            <img
-              src={lightboxSrc}
-              alt="фото"
-              style={{
-                maxWidth: "88vw",
-                maxHeight: "86vh",
-                objectFit: "contain",
-                borderRadius: "8px",
-              }}
+            <Image
+              src={lightbox}
+              alt=""
+              fill
+              style={{ objectFit: "contain" }}
             />
           </div>
         </div>

@@ -1,10 +1,11 @@
 import type React from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { PlaceCardsSection } from "./PlaceCardsSection";
+import type { PlaceCard } from "./PlaceCardsSection";
 
 type ScenarioStep = { time: string; title: string; subtitle: string };
 type Metric = { value: string; label: string };
-type PlaceCard = { title: string; meta: string; image?: string };
 type Section = { label: string; items: string[]; ordered?: boolean };
 type RouteFact = { label: string; value: string };
 
@@ -231,65 +232,6 @@ function CardLabel({ children }: { children: React.ReactNode }) {
     }}>
       {children}
     </p>
-  );
-}
-
-function PlaceCardItem({ card }: { card: PlaceCard }) {
-  return (
-    <div style={{
-      position: "relative",
-      overflow: "hidden",
-      borderRadius: "14px",
-      height: "100%",
-      border: "1px solid rgba(212,175,112,0.26)",
-      boxShadow: [
-        "0 0 0 1px rgba(212,175,112,0.08) inset",
-        "inset 0 0 18px rgba(180,138,48,0.06)",
-        "0 4px 22px rgba(180,138,48,0.10)",
-        "0 0 36px rgba(180,138,48,0.06)",
-      ].join(", "),
-    }}>
-      {/* photo */}
-      {card.image && (
-        <Image
-          src={card.image}
-          alt={card.title}
-          fill
-          className="object-cover"
-          style={{ objectPosition: "center" }}
-        />
-      )}
-      {/* warm dark base */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: card.image
-          ? "linear-gradient(135deg, rgba(10,8,4,0.62) 0%, rgba(8,6,2,0.82) 60%, rgba(6,4,1,0.90) 100%)"
-          : "linear-gradient(135deg, rgba(58,46,18,0.68) 0%, rgba(10,8,4,0.94) 65%, rgba(8,6,2,0.97) 100%)",
-      }} />
-      {/* bottom gold glow */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: "55%",
-        background: "linear-gradient(to top, rgba(180,138,48,0.14) 0%, transparent 100%)",
-      }} />
-      {/* top inner highlight */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: "1px",
-        background: "linear-gradient(to right, transparent, rgba(212,175,112,0.22), transparent)",
-      }} />
-      <div style={{
-        position: "absolute", inset: 0,
-        display: "flex", flexDirection: "column", justifyContent: "flex-end",
-        padding: "8px 11px",
-      }}>
-        <p style={{ color: "rgba(255,255,255,0.92)", fontSize: "12.5px", fontWeight: 500, lineHeight: 1.3, margin: 0 }}>
-          {card.title}
-        </p>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3px" }}>
-          <span style={{ color: "rgba(212,175,112,0.55)", fontSize: "10.5px" }}>{card.meta}</span>
-          <span style={{ color: "rgba(212,175,112,0.45)", fontSize: "12px" }}>→</span>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -614,24 +556,12 @@ export default async function RouteDetailPage({
                 </ol>
               </div>
 
-              {/* ── MIDDLE: Рядом есть + По дороге (wide, left-shifted) ── */}
+              {/* ── MIDDLE: Рядом есть + По дороге ── */}
               <div style={{ ...glassCard, padding: "18px 20px 16px", display: "flex", flexDirection: "column" }}>
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-                  <CardLabel>Рядом есть</CardLabel>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr", gap: "9px", flex: 1, minHeight: "108px" }}>
-                    {(route.nearby ?? []).map((card) => (
-                      <PlaceCardItem key={card.title} card={card} />
-                    ))}
-                  </div>
-                </div>
-                <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px", marginTop: "14px", flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-                  <CardLabel>По дороге можно заехать</CardLabel>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr", gap: "9px", flex: 1, minHeight: "108px" }}>
-                    {(route.enroute ?? []).map((card) => (
-                      <PlaceCardItem key={card.title} card={card} />
-                    ))}
-                  </div>
-                </div>
+                <PlaceCardsSection
+                  nearby={route.nearby ?? []}
+                  enroute={route.enroute ?? []}
+                />
               </div>
 
               {/* ── RIGHT: big block — top row 2 cards + bottom row full-width ── */}
