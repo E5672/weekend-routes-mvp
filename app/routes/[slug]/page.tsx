@@ -95,7 +95,7 @@ const routeData: Record<string, RouteData> = {
       { label: "Сложность", value: "Средняя" },
     ],
     sections: [
-      { label: "Советы", items: ["Взять ветровку", "Проверить погоду", "Удобная обувь"] },
+      { label: "Советы", items: ["Взять ветровку", "Проверить погоду", "Удобная обувь", "Взять перекус"] },
     ],
   },
   "finskiy-zaliv": {
@@ -129,69 +129,102 @@ const routeData: Record<string, RouteData> = {
       { label: "Сложность", value: "Очень лёгкая" },
     ],
     sections: [
-      { label: "Советы", items: ["Взять плед", "Смотреть ветер", "Подходит для романтики"] },
+      { label: "Советы", items: ["Взять плед", "Смотреть ветер", "Романтично вдвоём", "Взять фотик"] },
     ],
   },
 };
 
-// ─── design tokens ────────────────────────────────────────────────
+// ─── tokens ──────────────────────────────────────────────────────
 const gold = "#D4AF70";
-const goldGlow = "rgba(212,175,112,0.34)";
 
-// ─── metric icons — thin luxury line ─────────────────────────────
+// ─── glass card ──────────────────────────────────────────────────
+const glassCard: React.CSSProperties = {
+  background: "rgba(15,13,9,0.74)",
+  backdropFilter: "blur(28px)",
+  WebkitBackdropFilter: "blur(28px)",
+  border: "1px solid rgba(212,175,112,0.14)",
+  borderRadius: "26px",
+  boxShadow: "0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(212,175,112,0.08)",
+};
+
+// ─── metric icons ─────────────────────────────────────────────────
 const IconDistance = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 2C8.5 2 5.5 5 5.5 8.5c0 5.5 6.5 13.5 6.5 13.5s6.5-8 6.5-13.5C18.5 5 15.5 2 12 2z"/>
     <circle cx="12" cy="8.5" r="2.2"/>
   </svg>
 );
 const IconDuration = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.4" strokeLinecap="round">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.4" strokeLinecap="round">
     <circle cx="12" cy="12" r="8.5"/>
     <path d="M12 7v5l3 2.2"/>
   </svg>
 );
 const IconCost = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={gold} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="6.5" width="18" height="13" rx="2.2"/>
-    <path d="M3 11h18"/>
-    <path d="M7.5 4.5h9"/>
+    <path d="M3 11h18M7.5 4.5h9"/>
     <circle cx="17" cy="15" r="1.4" fill={gold} stroke="none"/>
   </svg>
 );
-
 const metricIcons = [<IconDistance key="d" />, <IconDuration key="t" />, <IconCost key="c" />];
 
 // ─── badge icons ──────────────────────────────────────────────────
 const IconFortress = () => (
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
     <path d="M3 20V11l2.5-2.5V5h2v2h3V5h2v2h3V5h2v3.5L20 11v9H3z"/>
     <path d="M8.5 20v-5h5v5"/>
   </svg>
 );
 const IconLandscape = () => (
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 18L7 9l4.5 6 4-5.5L21 18H1z"/>
     <circle cx="16" cy="6" r="2.2"/>
   </svg>
 );
 const IconCompass = () => (
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="11" cy="11" r="8.5"/>
     <path d="M14 8l-2.5 5.5-5.5 2.5 2.5-5.5 5.5-2.5z"/>
     <circle cx="11" cy="11" r="1" fill={gold} stroke="none"/>
   </svg>
 );
-
 const badgeIcons = [<IconFortress key="f" />, <IconLandscape key="l" />, <IconCompass key="c" />];
+
+// ─── tip icons ────────────────────────────────────────────────────
+const IconShoe = () => (
+  <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 15.5h14c1 0 2-.5 2-1.5v-1c-2-.5-4-2.5-4-5 0-2-1.5-3.5-3.5-3.5S7 6.5 6.5 8L4 12H2v3.5z"/>
+  </svg>
+);
+const IconWater = () => (
+  <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M7.5 2.5h5a1 1 0 011 1v1h-7v-1a1 1 0 011-1z"/>
+    <path d="M6.5 4.5h7l1 1.5v10a1.5 1.5 0 01-1.5 1.5h-6A1.5 1.5 0 016 16V6l.5-1.5z"/>
+    <path d="M8 11 Q10 13 12 11"/>
+  </svg>
+);
+const IconSun = () => (
+  <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round">
+    <circle cx="10" cy="10" r="3.2"/>
+    <path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M5.1 5.1l1.4 1.4M13.5 13.5l1.4 1.4M5.1 14.9l1.4-1.4M13.5 6.5l1.4-1.4"/>
+  </svg>
+);
+const IconBag = () => (
+  <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke={gold} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3.5 7.5h13l-1.5 10h-10l-1.5-10z"/>
+    <path d="M7.5 7.5V5.5a2.5 2.5 0 015 0v2"/>
+  </svg>
+);
+const tipIcons = [<IconShoe key="s" />, <IconWater key="w" />, <IconSun key="sun" />, <IconBag key="b" />];
 
 // ─── helpers ──────────────────────────────────────────────────────
 function CardLabel({ children }: { children: React.ReactNode }) {
   return (
     <p style={{
-      color: "rgba(255,255,255,0.36)",
-      fontSize: "11px",
-      fontWeight: 600,
+      color: "rgba(212,175,112,0.52)",
+      fontSize: "10px",
+      fontWeight: 700,
       textTransform: "uppercase",
       letterSpacing: "0.2em",
       marginBottom: "14px",
@@ -201,25 +234,48 @@ function CardLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PlaceCardCompact({ card }: { card: PlaceCard }) {
+function PlaceCardItem({ card }: { card: PlaceCard }) {
   return (
-    <div className="relative overflow-hidden" style={{
+    <div style={{
+      position: "relative",
+      overflow: "hidden",
       borderRadius: "14px",
-      border: "1px solid rgba(255,255,255,0.07)",
-      aspectRatio: "16/10",
+      height: "68px",
+      border: "1px solid rgba(212,175,112,0.26)",
+      boxShadow: [
+        "0 0 0 1px rgba(212,175,112,0.08) inset",
+        "inset 0 0 18px rgba(180,138,48,0.06)",
+        "0 4px 22px rgba(180,138,48,0.10)",
+        "0 0 36px rgba(180,138,48,0.06)",
+      ].join(", "),
     }}>
-      <div className="absolute inset-0" style={{
-        background: "linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.42) 100%)",
-        backgroundColor: "rgba(40,36,24,0.85)",
-      }}/>
+      {/* warm dark base */}
       <div style={{
-        position: "absolute",
-        inset: 0,
-        background: "linear-gradient(to top, rgba(212,175,112,0.07), transparent 40%)",
-      }}/>
-      <div className="absolute inset-0 flex flex-col justify-end" style={{ padding: "10px 12px" }}>
-        <p style={{ color: "rgba(255,255,255,0.88)", fontSize: "13px", fontWeight: 500, lineHeight: 1.3 }}>{card.title}</p>
-        <p style={{ color: "rgba(255,255,255,0.38)", fontSize: "11px", marginTop: "3px" }}>{card.meta}</p>
+        position: "absolute", inset: 0,
+        background: "linear-gradient(135deg, rgba(58,46,18,0.68) 0%, rgba(10,8,4,0.94) 65%, rgba(8,6,2,0.97) 100%)",
+      }} />
+      {/* bottom gold glow */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0, height: "55%",
+        background: "linear-gradient(to top, rgba(180,138,48,0.14) 0%, transparent 100%)",
+      }} />
+      {/* top inner highlight */}
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: "1px",
+        background: "linear-gradient(to right, transparent, rgba(212,175,112,0.22), transparent)",
+      }} />
+      <div style={{
+        position: "absolute", inset: 0,
+        display: "flex", flexDirection: "column", justifyContent: "flex-end",
+        padding: "8px 11px",
+      }}>
+        <p style={{ color: "rgba(255,255,255,0.92)", fontSize: "12.5px", fontWeight: 500, lineHeight: 1.3, margin: 0 }}>
+          {card.title}
+        </p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3px" }}>
+          <span style={{ color: "rgba(212,175,112,0.55)", fontSize: "10.5px" }}>{card.meta}</span>
+          <span style={{ color: "rgba(212,175,112,0.45)", fontSize: "12px" }}>→</span>
+        </div>
       </div>
     </div>
   );
@@ -235,6 +291,8 @@ export default async function RouteDetailPage({
   const route = routeData[slug];
   if (!route) notFound();
 
+  const tips = route.sections.find((s) => s.label === "Советы")?.items ?? [];
+
   return (
     <main style={{
       height: "100vh",
@@ -244,68 +302,67 @@ export default async function RouteDetailPage({
       background: "#090909",
     }}>
 
-      {/* ── outer padding + max-width ── */}
       <div style={{
         maxWidth: "1920px",
         margin: "0 auto",
-        padding: "24px",
+        padding: "22px",
         height: "100%",
         boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
       }}>
 
-        {/* ── rounded clipping container ── */}
+        {/* rounded clipping container */}
         <div style={{
           borderRadius: "28px",
           overflow: "hidden",
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          position: "relative",
           minHeight: 0,
         }}>
 
-          {/* ══ HERO IMAGE ZONE (flex:1) ══════════════════════════ */}
-          <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: 0 }}>
-
-            {/* photo */}
+          {/* ══ HERO IMAGE ZONE — flex column, text flows to bottom ══ */}
+          <div style={{
+            flex: 1,
+            position: "relative",
+            overflow: "hidden",
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}>
             <Image
               src={route.heroImage}
               alt={route.title}
               fill
               className="object-cover"
-              style={{
-                objectPosition: "center 46%",
-                filter: "contrast(1.04) saturate(1.02)",
-              }}
+              style={{ objectPosition: "center 46%", filter: "contrast(1.04) saturate(1.02)" }}
               priority
             />
 
             {/* overlay 1 — left gradient, text zone only */}
-            <div className="absolute inset-0" style={{
+            <div style={{
+              position: "absolute", inset: 0,
               background: "linear-gradient(90deg, rgba(6,7,8,0.88) 0%, rgba(6,7,8,0.72) 16%, rgba(6,7,8,0.44) 32%, rgba(6,7,8,0.18) 48%, rgba(6,7,8,0.00) 64%)",
             }} />
 
-            {/* overlay 2 — top nav zone */}
-            <div className="absolute inset-x-0 top-0" style={{
-              height: "34%",
+            {/* overlay 2 — top nav */}
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: "34%",
               background: "linear-gradient(180deg, rgba(7,8,10,0.42) 0%, rgba(7,8,10,0.18) 18%, rgba(7,8,10,0.00) 34%)",
             }} />
 
-            {/* overlay 3 — bottom fade into cards */}
-            <div className="absolute inset-x-0 bottom-0" style={{
-              height: "55%",
+            {/* overlay 3 — bottom fade */}
+            <div style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: "55%",
               background: "linear-gradient(180deg, rgba(8,8,9,0.00) 0%, rgba(8,8,9,0.20) 42%, rgba(8,8,9,0.58) 72%, rgba(8,8,9,0.94) 100%)",
             }} />
 
-            {/* ── NAV ── */}
+            {/* ── NAV (flow) ── */}
             <nav style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
+              position: "relative",
               zIndex: 20,
+              flexShrink: 0,
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -316,14 +373,12 @@ export default async function RouteDetailPage({
               minHeight: "72px",
             }}>
               <div>
-                <p style={{ color: "#fff", fontSize: "15px", fontWeight: 700, letterSpacing: "0.07em", lineHeight: 1.1 }}>WEEKEND</p>
-                <p style={{ color: "rgba(255,255,255,0.42)", fontSize: "11px", letterSpacing: "0.04em" }}>по Петербургу</p>
+                <p style={{ color: "#fff", fontSize: "15px", fontWeight: 700, letterSpacing: "0.07em", lineHeight: 1.1, margin: 0 }}>WEEKEND</p>
+                <p style={{ color: "rgba(255,255,255,0.42)", fontSize: "11px", letterSpacing: "0.04em", margin: 0 }}>по Петербургу</p>
               </div>
               <div className="hidden md:flex items-center" style={{ gap: "44px" }}>
                 {["Маршруты", "Подбор", "Избранное ♡", "О проекте"].map((link) => (
-                  <span key={link} style={{ color: "rgba(255,255,255,0.86)", fontSize: "15px", fontWeight: 500, cursor: "default" }}>
-                    {link}
-                  </span>
+                  <span key={link} style={{ color: "rgba(255,255,255,0.86)", fontSize: "15px", fontWeight: 500, cursor: "default" }}>{link}</span>
                 ))}
               </div>
               <button style={{
@@ -345,141 +400,148 @@ export default async function RouteDetailPage({
               </button>
             </nav>
 
-            {/* ── HERO TEXT — anchored bottom-left ── */}
+            {/* ── FLEX SPACER — grows on taller screens → more air at top ── */}
+            <div style={{ flex: 1, minHeight: "32px" }} />
+
+            {/* ── HERO TEXT (flow, sticks to bottom) ── */}
             <div style={{
-              position: "absolute",
-              left: "56px",
-              bottom: "100px",
-              width: "540px",
+              position: "relative",
               zIndex: 10,
+              paddingLeft: "56px",
+              paddingBottom: "108px",
+              flexShrink: 0,
             }}>
+              <div style={{ maxWidth: "540px" }}>
 
-              {/* pretitle */}
-              {route.pretitle && (
-                <p style={{
-                  fontSize: "19px",
-                  lineHeight: 1.2,
-                  color: "#D9A64B",
-                  opacity: 0.96,
-                  marginBottom: "22px",
-                  fontStyle: "italic",
-                  fontFamily: "Georgia, 'Times New Roman', serif",
-                  letterSpacing: "0.01em",
-                }}>
-                  {route.pretitle}
-                </p>
-              )}
-
-              {/* H1 */}
-              <h1 style={{
-                fontFamily: "Georgia, 'Times New Roman', serif",
-                fontSize: "84px",
-                lineHeight: 0.92,
-                fontWeight: 500,
-                letterSpacing: "-0.03em",
-                color: "rgba(255,255,255,0.98)",
-                textShadow: "0 2px 10px rgba(0,0,0,0.32)",
-                margin: 0,
-              }}>
-                {route.title}
-              </h1>
-
-              {/* description */}
-              <p style={{
-                fontSize: "20px",
-                lineHeight: 1.52,
-                maxWidth: "430px",
-                color: "rgba(255,255,255,0.90)",
-                marginTop: "28px",
-                fontWeight: 300,
-                letterSpacing: "0.005em",
-              }}>
-                {route.description}
-              </p>
-
-              {/* metrics row */}
-              {route.metrics && (
-                <div style={{ display: "flex", alignItems: "center", gap: "28px", marginTop: "30px", marginBottom: "34px" }}>
-                  {route.metrics.slice(0, 3).map((m, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span style={{ filter: `drop-shadow(0 0 6px ${goldGlow})`, display: "flex" }}>
-                        {metricIcons[i]}
-                      </span>
-                      <div>
-                        <p style={{ fontSize: "20px", fontWeight: 500, color: "rgba(255,255,255,0.95)", lineHeight: 1.1, margin: 0 }}>
-                          {m.value}
-                        </p>
-                        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.62)", lineHeight: 1.1, margin: 0 }}>
-                          {m.label}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* CTA buttons */}
-              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                <button
-                  className="transition-all active:scale-[0.97] hover:brightness-110"
-                  style={{
-                    width: "240px",
-                    height: "64px",
-                    borderRadius: "999px",
-                    background: "linear-gradient(135deg, #C9963C 0%, #E0B86A 100%)",
-                    color: "#17130C",
+                {/* pretitle */}
+                {route.pretitle && (
+                  <p style={{
                     fontSize: "18px",
-                    fontWeight: 600,
+                    lineHeight: 1.2,
+                    color: "#D9A64B",
+                    opacity: 0.96,
+                    marginBottom: "16px",
+                    fontStyle: "italic",
+                    fontFamily: "Georgia, 'Times New Roman', serif",
                     letterSpacing: "0.01em",
-                    boxShadow: "0 12px 28px rgba(201,150,60,0.34), 0 0 32px rgba(201,150,60,0.18)",
-                    border: "none",
-                    cursor: "default",
-                  }}
-                >
-                  Смотреть маршрут →
-                </button>
-                <button
-                  className="transition-all active:scale-[0.97] hover:brightness-110"
-                  style={{
-                    width: "220px",
-                    height: "64px",
-                    borderRadius: "999px",
-                    border: "1px solid rgba(212,175,112,0.54)",
-                    background: "rgba(14,14,14,0.18)",
-                    backdropFilter: "blur(10px)",
-                    WebkitBackdropFilter: "blur(10px)",
-                    color: "rgba(255,255,255,0.92)",
-                    fontSize: "17px",
-                    fontWeight: 400,
-                    cursor: "default",
-                  }}
-                >
-                  ♡ Сохранить
-                </button>
+                  }}>
+                    {route.pretitle}
+                  </p>
+                )}
+
+                {/* H1 */}
+                <h1 style={{
+                  fontFamily: "Georgia, 'Times New Roman', serif",
+                  fontSize: "84px",
+                  lineHeight: 0.92,
+                  fontWeight: 500,
+                  letterSpacing: "-0.03em",
+                  color: "rgba(255,255,255,0.98)",
+                  textShadow: "0 2px 10px rgba(0,0,0,0.32)",
+                  margin: 0,
+                }}>
+                  {route.title}
+                </h1>
+
+                {/* description */}
+                <p style={{
+                  fontSize: "17px",
+                  lineHeight: 1.56,
+                  maxWidth: "400px",
+                  color: "rgba(255,255,255,0.88)",
+                  marginTop: "20px",
+                  marginBottom: 0,
+                  fontWeight: 300,
+                }}>
+                  {route.description}
+                </p>
+
+                {/* metrics */}
+                {route.metrics && (
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "26px",
+                    marginTop: "22px",
+                    marginBottom: "28px",
+                    paddingTop: "18px",
+                    borderTop: "1px solid rgba(255,255,255,0.10)",
+                  }}>
+                    {route.metrics.slice(0, 3).map((m, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <span style={{ filter: "drop-shadow(0 0 7px rgba(212,175,112,0.45))", display: "flex" }}>
+                          {metricIcons[i]}
+                        </span>
+                        <div>
+                          <p style={{ fontSize: "18px", fontWeight: 500, color: "rgba(255,255,255,0.95)", lineHeight: 1.1, margin: 0 }}>{m.value}</p>
+                          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.52)", lineHeight: 1.1, margin: 0 }}>{m.label}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* CTA */}
+                <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                  <button
+                    className="transition-all active:scale-[0.97] hover:brightness-105"
+                    style={{
+                      width: "240px",
+                      height: "62px",
+                      borderRadius: "999px",
+                      background: "linear-gradient(160deg, #E4C768 0%, #D4A438 24%, #C69030 52%, #D0A030 78%, #C49030 100%)",
+                      color: "#14100A",
+                      fontSize: "17px",
+                      fontWeight: 600,
+                      letterSpacing: "0.015em",
+                      border: "none",
+                      cursor: "default",
+                      boxShadow: [
+                        "0 12px 32px rgba(201,150,60,0.44)",
+                        "0 2px 8px rgba(160,110,20,0.32)",
+                        "inset 0 1px 0 rgba(255,248,200,0.30)",
+                        "inset 0 -2px 3px rgba(100,60,0,0.18)",
+                      ].join(", "),
+                    }}
+                  >
+                    Смотреть маршрут →
+                  </button>
+                  <button
+                    className="transition-all active:scale-[0.97]"
+                    style={{
+                      width: "200px",
+                      height: "62px",
+                      borderRadius: "999px",
+                      border: "1px solid rgba(212,175,112,0.52)",
+                      background: "rgba(14,14,14,0.18)",
+                      backdropFilter: "blur(10px)",
+                      WebkitBackdropFilter: "blur(10px)",
+                      color: "rgba(255,255,255,0.90)",
+                      fontSize: "16px",
+                      cursor: "default",
+                    }}
+                  >
+                    ♡ Сохранить
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* ── BADGE PANEL — right, centered ── */}
+            {/* ── BADGE PANEL — lower-right, connected to bottom cards ── */}
             {route.badges && (
               <div
                 className="hidden lg:block"
-                style={{
-                  position: "absolute",
-                  right: "56px",
-                  top: "52%",
-                  transform: "translateY(-34%)",
-                  zIndex: 10,
-                }}
+                style={{ position: "absolute", right: "48px", bottom: "148px", zIndex: 10 }}
               >
                 <div style={{
-                  width: "420px",
-                  padding: "26px 28px",
-                  borderRadius: "28px",
-                  background: "rgba(54,51,40,0.26)",
+                  width: "340px",
+                  padding: "20px 22px",
+                  borderRadius: "22px",
+                  background: "rgba(50,46,34,0.28)",
                   border: "1px solid rgba(255,255,255,0.10)",
-                  backdropFilter: "blur(26px) saturate(1.15)",
-                  WebkitBackdropFilter: "blur(26px) saturate(1.15)",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.10)",
+                  backdropFilter: "blur(24px) saturate(1.15)",
+                  WebkitBackdropFilter: "blur(24px) saturate(1.15)",
+                  boxShadow: "0 16px 52px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.09)",
                 }}>
                   {route.badges.map((badge, i) => (
                     <div
@@ -487,26 +549,21 @@ export default async function RouteDetailPage({
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "18px",
-                        paddingBottom: i < route.badges!.length - 1 ? "18px" : 0,
-                        marginBottom: i < route.badges!.length - 1 ? "18px" : 0,
+                        gap: "14px",
+                        paddingBottom: i < route.badges!.length - 1 ? "14px" : 0,
+                        marginBottom: i < route.badges!.length - 1 ? "14px" : 0,
                         borderBottom: i < route.badges!.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
                       }}
                     >
                       <div style={{
-                        width: "54px",
-                        height: "54px",
-                        borderRadius: "14px",
-                        flexShrink: 0,
-                        background: "rgba(212,175,112,0.09)",
-                        border: "1px solid rgba(212,175,112,0.22)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        width: "40px", height: "40px", borderRadius: "11px", flexShrink: 0,
+                        background: "rgba(212,175,112,0.10)",
+                        border: "1px solid rgba(212,175,112,0.24)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
-                        {badgeIcons[i] ?? <span style={{ color: gold, fontSize: "18px" }}>✦</span>}
+                        {badgeIcons[i] ?? <span style={{ color: gold, fontSize: "16px" }}>✦</span>}
                       </div>
-                      <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "18px", lineHeight: 1.42, margin: 0 }}>
+                      <p style={{ color: "rgba(255,255,255,0.76)", fontSize: "14px", lineHeight: 1.4, margin: 0 }}>
                         {badge}
                       </p>
                     </div>
@@ -516,9 +573,9 @@ export default async function RouteDetailPage({
             )}
 
           </div>
-          {/* ══ END HERO IMAGE ZONE ══════════════════════════════ */}
+          {/* ── end hero image zone ── */}
 
-          {/* ══ BOTTOM CARDS — float up into hero fade ══════════ */}
+          {/* ══ BOTTOM CARDS ══════════════════════════════════════ */}
           <div style={{
             marginTop: "-92px",
             position: "relative",
@@ -527,59 +584,55 @@ export default async function RouteDetailPage({
           }}>
             <div style={{
               display: "grid",
-              gridTemplateColumns: "1.1fr 1.4fr 0.8fr",
-              gap: "28px",
+              gridTemplateColumns: "0.75fr 1.6fr 1.0fr",
+              gap: "14px",
             }}>
 
-              {/* ── Card 1: Сценарий дня ── */}
-              <div style={{
-                background: "rgba(18,18,18,0.34)",
-                backdropFilter: "blur(28px)",
-                WebkitBackdropFilter: "blur(28px)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "26px",
-                boxShadow: "0 22px 70px rgba(0,0,0,0.34)",
-                padding: "18px 20px 16px",
-              }}>
+              {/* ── LEFT: Сценарий дня (narrow) ── */}
+              <div style={{ ...glassCard, padding: "18px 18px 16px" }}>
                 <CardLabel>Сценарий дня</CardLabel>
-                <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 0 }}>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column" }}>
                   {(route.scenario ?? []).map((step, i, arr) => (
-                    <li key={step.time} style={{ display: "flex", gap: "10px", paddingBottom: i < arr.length - 1 ? "10px" : 0 }}>
+                    <li key={step.time} style={{
+                      display: "flex",
+                      gap: "10px",
+                      paddingBottom: i < arr.length - 1 ? "9px" : 0,
+                    }}>
                       {/* circle + line */}
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
                         <div style={{
-                          width: "22px",
-                          height: "22px",
-                          borderRadius: "50%",
-                          background: "#C9963C",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
+                          width: "22px", height: "22px", borderRadius: "50%",
+                          background: "linear-gradient(135deg, #DDB96A 0%, #C49435 100%)",
+                          display: "flex", alignItems: "center", justifyContent: "center",
                           flexShrink: 0,
-                          boxShadow: "0 2px 8px rgba(201,150,60,0.38)",
+                          boxShadow: "0 2px 8px rgba(212,175,112,0.36)",
                         }}>
-                          <span style={{ color: "#1A150C", fontSize: "9px", fontWeight: 700, lineHeight: 1 }}>{i + 1}</span>
+                          <span style={{ color: "#12090A", fontSize: "9px", fontWeight: 800, lineHeight: 1 }}>{i + 1}</span>
                         </div>
                         {i < arr.length - 1 && (
-                          <div style={{ width: "1px", flex: 1, minHeight: "10px", background: "rgba(212,175,112,0.34)", margin: "3px 0" }} />
+                          <div style={{
+                            width: "1px", flex: 1, minHeight: "9px",
+                            background: "rgba(212,175,112,0.34)",
+                            margin: "3px 0",
+                          }} />
                         )}
                       </div>
                       {/* time + title */}
-                      <div style={{ display: "flex", gap: "8px", flex: 1 }}>
+                      <div style={{ display: "flex", gap: "8px", flex: 1, alignItems: "flex-start" }}>
                         <span style={{
-                          color: "rgba(255,255,255,0.36)",
-                          fontSize: "10px",
-                          fontWeight: 500,
+                          color: "rgba(212,175,112,0.60)",
+                          fontSize: "11px",
+                          fontWeight: 600,
                           flexShrink: 0,
                           paddingTop: "3px",
-                          minWidth: "34px",
+                          minWidth: "36px",
                           fontVariantNumeric: "tabular-nums",
                         }}>
                           {step.time}
                         </span>
                         <p style={{
                           color: "rgba(255,255,255,0.88)",
-                          fontSize: "12px",
+                          fontSize: "13px",
                           fontWeight: 500,
                           lineHeight: 1.35,
                           paddingTop: "2px",
@@ -593,78 +646,79 @@ export default async function RouteDetailPage({
                 </ol>
               </div>
 
-              {/* ── Card 2: Рядом есть + По дороге ── */}
-              <div style={{
-                background: "rgba(18,18,18,0.34)",
-                backdropFilter: "blur(28px)",
-                WebkitBackdropFilter: "blur(28px)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "26px",
-                boxShadow: "0 22px 70px rgba(0,0,0,0.34)",
-                padding: "18px 20px 16px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "16px",
-              }}>
+              {/* ── MIDDLE: Рядом есть + По дороге (wide, left-shifted) ── */}
+              <div style={{ ...glassCard, padding: "18px 20px 16px", display: "flex", flexDirection: "column", gap: "16px" }}>
                 <div>
                   <CardLabel>Рядом есть</CardLabel>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "9px" }}>
                     {(route.nearby ?? []).map((card) => (
-                      <PlaceCardCompact key={card.title} card={card} />
+                      <PlaceCardItem key={card.title} card={card} />
                     ))}
                   </div>
                 </div>
-                <div>
+                <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px" }}>
                   <CardLabel>По дороге можно заехать</CardLabel>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "9px" }}>
                     {(route.enroute ?? []).map((card) => (
-                      <PlaceCardCompact key={card.title} card={card} />
+                      <PlaceCardItem key={card.title} card={card} />
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* ── Card 3: Факты о поездке ── */}
-              <div style={{
-                background: "rgba(18,18,18,0.34)",
-                backdropFilter: "blur(28px)",
-                WebkitBackdropFilter: "blur(28px)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "26px",
-                boxShadow: "0 22px 70px rgba(0,0,0,0.34)",
-                padding: "18px 20px 16px",
-              }}>
+              {/* ── RIGHT: О поездке + Советы ── */}
+              <div style={{ ...glassCard, padding: "18px 18px 16px" }}>
                 <CardLabel>О поездке</CardLabel>
-                <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "16px" }}>
                   {(route.facts ?? []).map((fact, i, arr) => (
                     <div
                       key={fact.label}
                       style={{
-                        paddingBottom: i < arr.length - 1 ? "14px" : 0,
-                        borderBottom: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                        paddingBottom: i < arr.length - 1 ? "10px" : 0,
+                        borderBottom: i < arr.length - 1 ? "1px solid rgba(212,175,112,0.08)" : "none",
                       }}
                     >
-                      <p style={{ color: "rgba(212,175,112,0.72)", fontSize: "10px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.16em", marginBottom: "4px" }}>
+                      <p style={{ color: "rgba(212,175,112,0.62)", fontSize: "10px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.16em", margin: "0 0 3px" }}>
                         {fact.label}
                       </p>
-                      <p style={{ color: "rgba(255,255,255,0.88)", fontSize: "14px", fontWeight: 400, lineHeight: 1.35 }}>
+                      <p style={{ color: "rgba(255,255,255,0.86)", fontSize: "13.5px", fontWeight: 400, lineHeight: 1.3, margin: 0 }}>
                         {fact.value}
                       </p>
                     </div>
                   ))}
                 </div>
+
+                {/* советы */}
+                {tips.length > 0 && (
+                  <div style={{ borderTop: "1px solid rgba(212,175,112,0.09)", paddingTop: "14px" }}>
+                    <CardLabel>Советы</CardLabel>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                      {tips.slice(0, 4).map((tip, i) => (
+                        <div key={tip} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                          <div style={{
+                            width: "28px", height: "28px", borderRadius: "8px", flexShrink: 0,
+                            background: "rgba(212,175,112,0.09)",
+                            border: "1px solid rgba(212,175,112,0.18)",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                          }}>
+                            {tipIcons[i] ?? <span style={{ color: gold, fontSize: "11px" }}>✦</span>}
+                          </div>
+                          <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "11px", lineHeight: 1.3, margin: 0 }}>
+                            {tip}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
             </div>
           </div>
-          {/* ══ END BOTTOM CARDS ════════════════════════════════ */}
+          {/* ── end bottom cards ── */}
 
         </div>
-        {/* end rounded container */}
-
       </div>
-      {/* end outer padding */}
-
     </main>
   );
 }
